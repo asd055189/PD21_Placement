@@ -9,6 +9,23 @@ GlobalPlacer::GlobalPlacer(Placement &placement)
 }
 
 
+void GlobalPlacer::_random(vector<double> &x){
+    double left=_placement.boundryLeft(),right=_placement.boundryRight();
+    double top=_placement.boundryTop(),buttom=_placement.boundryBottom();
+    for (int i = 0; i < _placement.numModules(); ++i){ 
+		x[i*2]=rand()%int(right-left);//x
+		x[i*2 + 1]=rand()%int(top-buttom);//y
+        if(x[i*2]>right)
+            x[i*2]=left+x[i*2]-right;
+        if(x[i*2+1]>top)
+            x[i*2]=buttom+x[i*2]-top;
+        if(x[i*2]+_placement.module(i).width()>right)
+            x[i*2]=right-_placement.module(i).width();
+        if(x[i*2+1]+_placement.module(i).height()>top)
+            x[i*2+1]=top-_placement.module(i).height();
+	    _placement.module(i).setPosition(x[i*2], x[i*2 + 1]);
+	}
+}
 void GlobalPlacer::place()
 {
 	///////////////////////////////////////////////////////////////////
@@ -16,24 +33,28 @@ void GlobalPlacer::place()
 	// if you use other methods, you can skip and delete it directly.
 	//////////////////////////////////////////////////////////////////
 
-	ExampleFunction ef; // require to define the object function and gradient function
+	//ExampleFunction ef; // require to define the object function and gradient function
 
-    vector<double> x(2); // solution vector, size: num_blocks*2 
+    vector<double> x; // solution vector, size: num_blocks*2 
                          // each 2 variables represent the X and Y dimensions of a block
-    x[0] = 100; // initialize the solution vector
-    x[1] = 100;
+    //x[0] = 100; // initialize the solution vector
+    //x[1] = 100;
 
-    NumericalOptimizer no(ef);
+    srand(time(NULL));
+    x.resize(_placement.numModules() * 2);
+    _random(x);
+   /* NumericalOptimizer no(ef);
     no.setX(x); // set initial solution
     no.setNumIteration(35); // user-specified parameter
     no.setStepSizeBound(5); // user-specified parameter
-    no.solve(); // Conjugate Gradient solver
+    no.solve(); // Conjugate Gradient solver*/
 
+    /*
     cout << "Current solution:" << endl;
     for (unsigned i = 0; i < no.dimension(); i++) {
         cout << "x[" << i << "] = " << no.x(i) << endl;
     }
-    cout << "Objective: " << no.objective() << endl;
+    cout << "Objective: " << no.objective() << endl;*/
 	////////////////////////////////////////////////////////////////
 
 

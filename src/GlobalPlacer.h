@@ -12,6 +12,7 @@ class GlobalPlacer
 public:
     GlobalPlacer(Placement &placement);
 	void place();
+    void _random(vector<double> &x);
     void plotPlacementResult( const string outfilename, bool isPrompt = false );
 
 private:

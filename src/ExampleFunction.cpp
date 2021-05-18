@@ -9,8 +9,8 @@ ExampleFunction::ExampleFunction()
 void ExampleFunction::evaluateFG(const vector<double> &x, double &f, vector<double> &g)
 {
     f = 3*x[0]*x[0] + 2*x[0]*x[1] + 2*x[1]*x[1] + 7; // objective function
-    g[0] = 6*x[0] + 2*x[1]; // gradient function of X
-    g[1] = 2*x[0] + 4*x[1]; // gradient function of Y
+    g[0] = 6*x[0] + 2*x[1]; // gradient function of X 6x+2y
+    g[1] = 2*x[0] + 4*x[1]; // gradient function of Y 2x+4y
 }
 
 void ExampleFunction::evaluateF(const vector<double> &x, double &f)
